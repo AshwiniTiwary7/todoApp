@@ -7,7 +7,9 @@ import { FaTrash } from "react-icons/fa6";
 export default function TodoAdd() {
     const [todoTask, setTodoTask] = useState("");
     const [allTodos, setAllTodos] = useState([]);
+    const [loading, setLoading] = useState(false);
     async function getAllTodos() {
+        setLoading(true);
         try {
             const respAllTodos = await axios.get('http://localhost:4000/api/v1/allTask');
             if (respAllTodos.data) {
@@ -16,6 +18,7 @@ export default function TodoAdd() {
         } catch (error) {
             console.log(error);
         }
+        setLoading(false);
     }
     async function todoSubmit(event) {
         event.preventDefault();
@@ -49,7 +52,7 @@ export default function TodoAdd() {
                 <span className="input-group-text bg-primary text-light fw-medium" id="addon-wrapping"><FaCalendarCheck /></span>
                 <form onSubmit={todoSubmit} className="d-flex">
                     <input type="text" class="form-control" placeholder="Enter Todo" aria-label="Username" aria-describedby="addon-wrapping" value={todoTask} onChange={(e) => setTodoTask(e.target.value)} required />
-                    <input type="submit" value="Add Todo" className="fs-6 bg-primary border-0 rounded-end text-light" />
+    { loading ? (<p>Loading</p>) : (<input type="submit" value="Add Todo" className="fs-6 bg-primary border-0 rounded-end text-light" />)
                 </form>
             </div>
             <div className="col-12 mt-4">
