@@ -15,8 +15,13 @@ export default function TodoAdd() {
             if (respAllTodos.data) {
                 setAllTodos(respAllTodos.data.allTasksks);
             }
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            if(err.response){
+                toast.error(err.response.data.message);
+            }
+            else{
+                toast.error(err.message);
+            }
         }
         setLoading(false);
     }
@@ -28,8 +33,13 @@ export default function TodoAdd() {
                 toast.success(respTodo.data.message);
             }
             getAllTodos();
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            if(err.response){
+                toast.error(err.response.data.message);
+            }
+            else{
+                toast.error(err.message);
+            }
         }
     }
     async function deleteTodo(taskId) {
@@ -39,8 +49,13 @@ export default function TodoAdd() {
                 toast.success(respDeleted.data.message);
             }
             getAllTodos();
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            if(err.response){
+                toast.error(err.response.data.message);
+            }
+            else{
+                toast.error(err.message);
+            }
         }
     }
     useEffect(() => {
